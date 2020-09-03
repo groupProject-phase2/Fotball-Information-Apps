@@ -44,11 +44,12 @@ ol {
   list-style: none;
 }
 
-#schedule-page {
+#schedule-page,
+#news-page {
   height: 100vh;
 }
 
-.schedule-container {
+.wrapper {
   max-height: 100vh;
   overflow: auto;
 }
