@@ -1,100 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- UIkit CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <title>My Gallery</title>
-</head>
-<body>
-    <!-- LOGIN - PAGE -->
-    <section id="login-page">
-        <div class="bg-video">
-            <video class="bg-video-content" autoplay muted loop>
-                <source src="img/video.mp4" type="video/mp4">
-                <source src="img/video.webm" type="video/webm">
-                    your browser is not supported
-            </video>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" href="#"
+              >Home <span class="sr-only">(current)</span></a
+            >
+            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">Pricing</a>
+            <a
+              class="nav-link disabled"
+              href="#"
+              tabindex="-1"
+              aria-disabled="true"
+              >Disabled</a
+            >
+          </div>
         </div>
-        <div class="center">
-            <h1 style="margin-bottom: 3rem;" class="welcome">Welcome To My Gallery</h1>
-            <form>
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input id="login-email" class="uk-input" type="email" placeholder="email here">
-                    </div>
-                </div>
-            
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-                        <input id="login-password" class="uk-input" type="password" placeholder="password here">
-                    </div>
-                </div>
-                <button onclick="login(event)" type="submit" class="login-btn uk-button uk-button-primary">Login</button>
-            
-            </form>            
+      </div>
+    </nav>
+    <!-- end navbar -->
+
+    <!-- Schedule page -->
+    <section id="schedule-page" class="container">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="text-right text-uppercase font-weight-bold my-4">
+            Informasi <br />
+            Jadwal
+          </h1>
+          <img src="./img/goal.svg" alt="" width="100%" />
         </div>
+        <div class="schedule-container col-7 p-4">
+          <!-- SCHEDULE CARD -->
+          <div class="card border-0 shadow mb-3">
+            <div class="card-body">
+              <h6 class="card-title text-center">Liga Indonesia</h6>
+              <div class="row align-items-center">
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/2e00f38fc72d4a24105383a5cc4133fc"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persija</h6>
+                </div>
+                <div class="col-3 text-center">
+                  <h1>vs</h1>
+                  <ul
+                    class="list-group border-0 text-center"
+                    style="font-size: small"
+                  >
+                    <li class="card-text">
+                      <i class="fa fa-calendar mr-2"></i>9 Sep 2020
+                    </li>
+                    <li class="card-text">
+                      <i class="fa fa-map-marker mr-2"></i>Gelora Bung Karno
+                    </li>
+                  </ul>
+                </div>
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/25942a94ccb18437a8a96a55d0a9487e"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persib</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SCHEDULE CARD END -->
+
+          <!-- SCHEDULE CARD -->
+          <div class="card border-0 shadow mb-3">
+            <div class="card-body">
+              <h6 class="card-title text-center">Liga Indonesia</h6>
+              <div class="row align-items-center">
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/2e00f38fc72d4a24105383a5cc4133fc"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persija</h6>
+                </div>
+                <div class="col-3 text-center">
+                  <h1>vs</h1>
+                  <ul
+                    class="list-group border-0 text-center"
+                    style="font-size: small"
+                  >
+                    <li class="card-text">
+                      <i class="fa fa-calendar mr-2"></i>9 Sep 2020
+                    </li>
+                    <li class="card-text">
+                      <i class="fa fa-map-marker mr-2"></i>Gelora Bung Karno
+                    </li>
+                  </ul>
+                </div>
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/25942a94ccb18437a8a96a55d0a9487e"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persib</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SCHEDULE CARD END -->
+
+          <!-- SCHEDULE CARD -->
+          <div class="card border-0 shadow mb-3">
+            <div class="card-body">
+              <h6 class="card-title text-center">Liga Indonesia</h6>
+              <div class="row align-items-center">
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/2e00f38fc72d4a24105383a5cc4133fc"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persija</h6>
+                </div>
+                <div class="col-3 text-center">
+                  <h1>vs</h1>
+                  <ul
+                    class="list-group border-0 text-center"
+                    style="font-size: small"
+                  >
+                    <li class="card-text">
+                      <i class="fa fa-calendar mr-2"></i>9 Sep 2020
+                    </li>
+                    <li class="card-text">
+                      <i class="fa fa-map-marker mr-2"></i>Gelora Bung Karno
+                    </li>
+                  </ul>
+                </div>
+                <div class="col text-center">
+                  <img
+                    height="120px"
+                    src="https://cf.shopee.co.id/file/25942a94ccb18437a8a96a55d0a9487e"
+                    alt=""
+                  />
+                  <h6 class="font-weight-bold my-3">Persib</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SCHEDULE CARD END -->
+        </div>
+      </div>
     </section>
 
-    <!-- MAIN PAGE -->
-    <section id="main-page">
-        <nav class="uk-navbar-container navbar-custom" uk-navbar>
-            <div class="uk-navbar-left">
-        
-                <ul class="uk-navbar-nav">
-                    <li>
-                        <a href="#"><i class="logo fas fa-camera-retro"></i></a>
-                    </li>
-                    <li><a href="#">My Gallery</a></li>
-                </ul>
-        
-            </div>
-            <div class="uk-navbar-right">
-        
-                <ul class="uk-navbar-nav">
-                    <li>
-                        <a href="#">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <!-- End Schedule page -->
 
-        <!-- HOME -SECTION -->
-
-        <section id="home-page">
-
-            <!-- CARD -->
-            <div class="card-custom uk-card uk-card-default uk-card-hover uk-card-body">
-                <i class="bookmark far fa-plus-square"></i>
-                <img src="https://images.unsplash.com/photo-1587613753310-0ba642887227?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0MTc4MH0" alt="image">
-            </div>
-
-        </section>
-
-        <!-- GALLERY - SECTION -->
-
-        <section id="my-gallery-page">
-            
-            <!-- CARD -->
-            <div class="card-custom uk-card uk-card-default uk-card-hover uk-card-body">
-                <i class="trash far fa-minus-square"></i>
-                <img src="https://images.unsplash.com/photo-1587613753310-0ba642887227?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0MTc4MH0" alt="image">
-            </div>
-
-        </section>
-    </section>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="main.js"></script>
-</body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
