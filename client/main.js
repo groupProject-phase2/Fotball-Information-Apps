@@ -2,6 +2,7 @@ let baseUrl = 'http://localhost:3001'
 
 $(document).ready(function () {
     auth()
+    fetchNews()
 });
 
 function auth() {
@@ -77,3 +78,37 @@ function toLogin(event) {
     $('#login-page').show()
     $('#register-page').hide()
 }
+
+function logout() {
+    localStorage.clear()
+}
+
+function fetchNews() {
+    $.ajax({
+        url: `${baseUrl}/news`,
+        method: 'get',
+        Headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(data => {
+            console.log(data)
+            data.articles.forEach(e => {
+                console.log(e.urlToImage);
+                console.log(e.title);
+                console.log(e.description);
+            });
+        })
+        .fail(err => {
+
+        })
+}
+
+// function fixtures(){
+//     $.ajax({
+//         url: `${baseUrl}/football`,
+//         method: 'get',
+//     })
+// }
+
+ 
