@@ -104,6 +104,7 @@ function fetchNews() {
         })
 }
 
+
 // function fixtures(){
 //     $.ajax({
 //         url: `${baseUrl}/football`,
