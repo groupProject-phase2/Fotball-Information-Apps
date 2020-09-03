@@ -2,11 +2,11 @@ const { verifyToken } = require('../helpers/jwt')
 const { User } = require('../models')
 
 async function authentication(req, res, next) {
-    const { token } = req.headers
+    const { access_token } = req.headers
     try {
-        if (!token) throw { name: "UNAUTHORIZED" }
+        if (!access_token) throw { name: "UNAUTHORIZED" }
         else {
-            const decoded = verifyToken(token)
+            const decoded = verifyToken(access_token)
             const user = await User.findOne({
                 where: {
                     email: decoded.email
