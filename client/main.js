@@ -222,11 +222,13 @@ function toPlayer(event) {
 
     })
         .done(data => {
-            console.log(data)
             $('#player-container').empty()
+  
             data.result.forEach(element => {
                 console.log(element.player_age)
-                $('#player-container').append(`<div class="card" style="width: 35rem;">
+                $('#player-container').append(`
+                <p> Hasil Pencarian :</p>
+                <div class="card" style="width: 35rem;">
                 <div class="card-body">
                   <h5 class="card-title">${element.player_name}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">TEAM NAME :${element.team_name}</h6>
