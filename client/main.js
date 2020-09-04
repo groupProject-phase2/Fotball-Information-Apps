@@ -2,6 +2,7 @@ let baseUrl = 'http://localhost:3001'
 
 $(document).ready(function () {
     auth()
+    // fixtures()
 });
 
 function auth() {
@@ -36,7 +37,7 @@ function login(event) {
         }
     })
         .done(data => {
-            localStorage.setItem('access_token', data.token)
+            localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('city', data.city)
             auth()
         })
@@ -78,8 +79,7 @@ function register(event) {
 
 function toSchedule(event) {
     event.preventDefault()
-    $('#news-page').hide()
-    
+    $('#main-page').hide()
     $('#schedule-page').show()
     fixtures()
 }
@@ -136,8 +136,9 @@ function fetchNews() {
 
 
 function fixtures() {
+    console.log("masukfixture")
     $.ajax({
-        url: `${baseUrl}/football/fixtures`,
+        url: `http://localhost:3001/football/fixtures`,
         method: 'get',
         Headers: {
             access_token: localStorage.access_token
