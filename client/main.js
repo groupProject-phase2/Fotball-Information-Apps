@@ -6,7 +6,7 @@ $(document).ready(function () {
 });
 
 function auth() {
-    if (localStorage.acces_token) {
+    if (localStorage.access_token) {
         $('#main-page').show()
         $('#login-page').hide()
     } else {
@@ -20,7 +20,7 @@ function login(event) {
     let email = $('#email').val()
     let password = $('#password').val()
     $.ajax({
-        url: '${baseUrl}/login',
+        url: `${baseUrl}/login`,
         method: 'post',
         data: {
             email,
@@ -28,7 +28,8 @@ function login(event) {
         }
     })
         .done(data => {
-            localStorage.setItem('access_token', data.token)
+            console.log('berhasil login')
+            localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('city', data.city)
             auth()
         })
@@ -81,6 +82,7 @@ function toLogin(event) {
 
 function logout() {
     localStorage.clear()
+    auth()
 }
 
 function fetchNews() {
