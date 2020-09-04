@@ -245,3 +245,41 @@
       error: string
     }
     ```
+
+- **URL**
+
+  /googlesign
+
+- **Method:**
+
+  `POST`
+
+- **URL Params**
+
+  `none`
+
+- **Data Params**
+
+  `none`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```ts
+    {
+      access_token:string,
+      city: string
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+
+    ```ts
+    {
+      error: string
+    }
+    ```
