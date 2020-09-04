@@ -9,11 +9,14 @@ function auth() {
     if (localStorage.access_token) {
         $('#main-page').show()
         $('#login-page').hide()
+        $('#register-page').hide()
     } else {
         $('#main-page').hide()
         $('#login-page').show()
+        $('#register-page').hide()
     }
 }
+
 
 function login(event) {
     event.preventDefault()
@@ -44,9 +47,9 @@ function login(event) {
 
 function register(event) {
     event.preventDefault()
-    let email = $('#email').val()
-    let password = $('#password').val()
-    let city = $('#city').val()
+    let email = $('#register-email').val()
+    let password = $('#register-password').val()
+    let city = $('#register-city').val()
     $.ajax({
         url: `${baseUrl}/register`,
         method: 'post',
