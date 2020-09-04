@@ -1,118 +1,128 @@
-let baseUrl = 'http://localhost:3001'
+let baseUrl = "http://localhost:3001"
 
 $(document).ready(function () {
-    auth()
-});
+  auth()
+})
 
 function auth() {
-    if (localStorage.access_token ) {
-        $('#main-page').show()
-        fetchNews()
-        $('#login-page').hide()
-        $('#schedule-page').hide()
-        $('#register-page').hide()
-        $('#navbar').show()
-    } else {
-        $('#main-page').hide()
-        $('#login-page').show()
-        $('#schedule-page').hide()
-        $('#navbar').hide()
-        $('#register-page').hide()
-
-    }
+  if (localStorage.access_token) {
+    $("#main-page").show()
+    fetchNews()
+    $("#login-page").hide()
+    $("#schedule-page").hide()
+    $("#register-page").hide()
+    $("#navbar").show()
+  } else {
+    $("#main-page").hide()
+    $("#login-page").show()
+    $("#schedule-page").hide()
+    $("#navbar").hide()
+    $("#register-page").hide()
+  }
 }
 
 function login(event) {
-    event.preventDefault()
-    let email = $('#login-email').val()
-    let password = $('#login-password').val()
-    console.log(email, password)
-    $.ajax({
-        url: 'http://localhost:3001/login',
-        method: 'post',
-        data: {
-            email,
-            password
-        }
+  event.preventDefault()
+  let email = $("#login-email").val()
+  let password = $("#login-password").val()
+  console.log(email, password)
+  $.ajax({
+    url: "http://localhost:3001/login",
+    method: "post",
+    data: {
+      email,
+      password,
+    },
+  })
+    .done((data) => {
+      localStorage.setItem("access_token", data.token)
+      localStorage.setItem("city", data.city)
+      auth()
     })
-        .done(data => {
-            localStorage.setItem('access_token', data.token)
-            localStorage.setItem('city', data.city)
-            auth()
-        })
-        .fail(err => {
-            console.log(err.responeJSON, 'err')
-        })
-        .always(_ => {
-            $('#login-email').val('')
-            $('#login-password').val('')
-        })
+    .fail((err) => {
+      alertify.set("notifier", "position", "bottom-center")
+      alertify.notify(err.responseJSON.error, "error", 5, function () {
+        console.log("dismissed")
+      })
+    })
+    .always((_) => {
+      $("#login-email").val("")
+      $("#login-password").val("")
+    })
 }
 
 function register(event) {
-    event.preventDefault()
-    let email = $('#register-email').val()
-    let password = $('#register-password').val()
-    let city = $('#register-city').val()
-    $.ajax({
-        url: `${baseUrl}/register`,
-        method: 'post',
-        data: {
-            email,
-            password,
-            city
-        }
+  event.preventDefault()
+  let email = $("#register-email").val()
+  let password = $("#register-password").val()
+  let city = $("#register-city").val()
+  $.ajax({
+    url: `${baseUrl}/register`,
+    method: "post",
+    data: {
+      email,
+      password,
+      city,
+    },
+  })
+    .done((data) => {
+      auth()
     })
-        .done(data => {
-            auth()
-        })
-        .fail(err => {
-            console.log(err.responeJSON, 'err')
-        })
-        .always(_ => {
-            $('#register-email').val('')
-            $('#register-password').val('')
-            $('#register-city').val('')
-        })
+    .fail((err) => {
+      alertify.set("notifier", "position", "bottom-center")
+      alertify.notify(
+        err.responseJSON.error.join("\n"),
+        "error",
+        10,
+        function () {
+          console.log("dismissed")
+        }
+      )
+    })
+    .always((_) => {
+      $("#register-email").val("")
+      $("#register-password").val("")
+      $("#register-city").val("")
+    })
 }
 
 function toSchedule(event) {
-    event.preventDefault()
-    $('#news-page').hide()
-    
-    $('#schedule-page').show()
-    fixtures()
+  event.preventDefault()
+  $("#news-page").hide()
+
+  $("#schedule-page").show()
+  fixtures()
 }
 
 function toRegister(event) {
-    event.preventDefault()
-    $('#login-page').hide()
-    $('#register-page').show()
+  event.preventDefault()
+  $("#login-page").hide()
+  $("#register-page").show()
 }
 
 function toLogin(event) {
-    event.preventDefault()
-    $('#login-page').show()
-    $('#register-page').hide()
+  event.preventDefault()
+  $("#login-page").show()
+  $("#register-page").hide()
 }
 
 function logout() {
-    localStorage.clear()
+  localStorage.clear()
 }
 
 function fetchNews() {
-    $.ajax({
-        url: `${baseUrl}/news`,
-        method: 'get',
-        Headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(data => {
-            $('#news-container').empty()
-            data.articles.forEach(e => {
-                $('#news-container').append(
-                    `<ul><div class="card shadow border-0 mb-3">
+  $.ajax({
+    url: `${baseUrl}/news`,
+    method: "get",
+    Headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((data) => {
+      $("#news-container").empty()
+      data.articles.forEach((e) => {
+        $("#news-container").append(
+          `<ul><div class="card shadow border-0 mb-3">
                     <div class="card-body">
                         <img
                         src="${e.urlToImage}"
@@ -126,29 +136,27 @@ function fetchNews() {
                             ${e.description}
                         </p>
                     </div>
-              </div></ul>`)
-            });
-        })
-        .fail(err => {
-
-        })
+              </div></ul>`
+        )
+      })
+    })
+    .fail((err) => {})
 }
 
-
 function fixtures() {
-    $.ajax({
-        url: `${baseUrl}/football/fixtures`,
-        method: 'get',
-        Headers: {
-            access_token: localStorage.access_token
-        }
-    })
-    .done(data => {
-        console.log(data)
-        data.data.forEach(e => {
-            console.log(e.away_team_logo)
-            
-            $('#schedule-container').append(`
+  $.ajax({
+    url: `${baseUrl}/football/fixtures`,
+    method: "get",
+    Headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((data) => {
+      console.log(data)
+      data.data.forEach((e) => {
+        console.log(e.away_team_logo)
+
+        $("#schedule-container").append(`
             <div class="card border-0 shadow mb-3">
             <div class="card-body">
               <h6 class="card-title text-center">${e.league_name}</h6>
@@ -186,10 +194,7 @@ function fixtures() {
               </div>
             </div>
           </div>`)
-        });
+      })
     })
-    .fail(err => {
-
-    })
+    .fail((err) => {})
 }
-
