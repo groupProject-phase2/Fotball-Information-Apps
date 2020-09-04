@@ -1,6 +1,30 @@
 let baseUrl = "http://localhost:3001"
 
 $(document).ready(function () {
+
+    auth()
+    // fixtures()
+});
+
+function auth() {
+    if (localStorage.access_token) {
+        $('#main-page').show()
+        fetchNews()
+        $('#login-page').hide()
+        $('#schedule-page').hide()
+        $('#register-page').hide()
+        $('#player-page').hide()
+        $('#navbar').show()
+    } else {
+        $('#main-page').hide()
+        $('#login-page').show()
+        $('#schedule-page').hide()
+        $('#navbar').hide()
+        $('#player-page').hide()
+        $('#register-page').hide()
+
+    }
+
   auth()
 })
 
@@ -19,6 +43,7 @@ function auth() {
     $("#navbar").hide()
     $("#register-page").hide()
   }
+
 }
 
 function login(event) {
@@ -49,6 +74,20 @@ function login(event) {
       $("#login-email").val("")
       $("#login-password").val("")
     })
+
+        .done(data => {
+            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('city', data.city)
+            auth()
+        })
+        .fail(err => {
+            console.log(err.responeJSON, 'err')
+        })
+        .always(_ => {
+            $('#login-email').val('')
+            $('#login-password').val('')
+        })
+
 }
 
 function register(event) {
@@ -87,11 +126,19 @@ function register(event) {
 }
 
 function toSchedule(event) {
-  event.preventDefault()
-  $("#news-page").hide()
 
-  $("#schedule-page").show()
-  fixtures()
+    event.preventDefault()
+    $('#main-page').hide()
+    $('#schedule-page').show()
+    fixtures()
+
+}
+
+function toHome(event) {
+    event.preventDefault()
+    auth()
+    $('#search-category').val('')
+    fetchNews()
 }
 
 function toRegister(event) {
@@ -128,6 +175,7 @@ function fetchNews() {
       data.articles.forEach((e) => {
         $("#news-container").append(
           `<ul><div class="card shadow border-0 mb-3">
+
                     <div class="card-body">
                         <img
                         src="${e.urlToImage}"
@@ -146,6 +194,55 @@ function fetchNews() {
       })
     })
     .fail((err) => {})
+}
+
+
+// function player() {
+//     $.ajax({
+//         url: 'https://allsportsapi.com/api/football/?&met=Players&playerName=Ronaldo Cristiano&APIkey=a8d998e705f70e81aa5bec929e7e9248ad796c2cfb8783a254ac944e6995ac19',
+//         method: 'get',
+
+//     })
+//         .done(data => {
+//             console.log(data)
+//         })
+//         .fail(err => {
+
+//         })
+// }
+
+function toPlayer() {
+    $('#main-page').hide()
+    $('#player-page').show()
+    let name = $('#search-category').val()
+    $.ajax({
+        url: `https://allsportsapi.com/api/football/?&met=Players&playerName=${name}&APIkey=a8d998e705f70e81aa5bec929e7e9248ad796c2cfb8783a254ac944e6995ac19`,
+        method: 'get',
+
+    })
+        .done(data => {
+            console.log(data)
+            $('#player-container').empty()
+            data.result.forEach(element => {
+                console.log(element.player_age)
+                $('#player-container').append(`<div class="card" style="width: 35rem;">
+                <div class="card-body">
+                  <h5 class="card-title">${element.player_name}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">TEAM NAME :${element.team_name}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">POSITION :${element.player_type}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">GOAL : ${element.player_goals}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">MATCH : ${element.player_match_played}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">NUMBER : ${element.player_number}</h6>
+                </div>
+              </div><br>`)
+            });
+        })
+        .fail(err => {
+
+        })
+        always(_ => {
+            $('#search-category').val('')
+        })
 }
 
 function fixtures() {
