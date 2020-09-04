@@ -5,6 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="google-signin-client_id" content="64846959289-v417adt88avb2k6nb5gu8jhc0mtr3cs7.apps.googleusercontent.com">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -80,6 +81,7 @@
             <button type="submit" class="btn btn-primary btn-block rounded"
               style="align-content: center;">Login</button>
           </div>
+          <div class="g-signin2" data-onsuccess="onSignIn" style="margin-top: 20px; margin-left: 16px;"></div>
         </form><br>
         <form onclick="toRegister(event)">
           <div class="col text-center">
@@ -177,6 +179,7 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"

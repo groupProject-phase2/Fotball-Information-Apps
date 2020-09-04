@@ -108,6 +108,10 @@ function toLogin(event) {
 
 function logout() {
   localStorage.clear()
+  var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+  });
   auth()
 }
 
@@ -198,4 +202,27 @@ function fixtures() {
       })
     })
     .fail((err) => {})
+}
+
+function onSignIn(googleUser) {
+  let id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token)
+  $.ajax({
+      url: `${baseUrl}/login/googlesign`,
+      method: 'post',
+      data : {
+          id_token 
+      }
+  })
+  .done(data => {
+      console.log(data.access_token, data.city ,'ini hasil console log')
+      localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('city', data.city)
+      console.log(data, 'ini data dari google')
+      auth()
+  })  
+  .fail(err => {
+      console.log(err.responeJSON, 'err')
+  })
+
 }
