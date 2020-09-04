@@ -2,27 +2,33 @@ let baseUrl = 'http://localhost:3001'
 
 $(document).ready(function () {
     auth()
-    fixtures()
-    $('#news-page').show()
-    $('#schedule-page').hide()
 });
 
 function auth() {
-    if (localStorage.acces_token) {
+    if (localStorage.access_token ) {
         $('#main-page').show()
+        fetchNews()
         $('#login-page').hide()
+        $('#schedule-page').hide()
+        $('#register-page').hide()
+        $('#navbar').show()
     } else {
         $('#main-page').hide()
         $('#login-page').show()
+        $('#schedule-page').hide()
+        $('#navbar').hide()
+        $('#register-page').hide()
+
     }
 }
 
 function login(event) {
     event.preventDefault()
-    let email = $('#email').val()
-    let password = $('#password').val()
+    let email = $('#login-email').val()
+    let password = $('#login-password').val()
+    console.log(email, password)
     $.ajax({
-        url: '${baseUrl}/login',
+        url: 'http://localhost:3001/login',
         method: 'post',
         data: {
             email,
@@ -45,9 +51,9 @@ function login(event) {
 
 function register(event) {
     event.preventDefault()
-    let email = $('#email').val()
-    let password = $('#password').val()
-    let city = $('#city').val()
+    let email = $('#register-email').val()
+    let password = $('#register-password').val()
+    let city = $('#register-city').val()
     $.ajax({
         url: `${baseUrl}/register`,
         method: 'post',
@@ -66,13 +72,16 @@ function register(event) {
         .always(_ => {
             $('#register-email').val('')
             $('#register-password').val('')
+            $('#register-city').val('')
         })
 }
 
 function toSchedule(event) {
     event.preventDefault()
     $('#news-page').hide()
+    
     $('#schedule-page').show()
+    fixtures()
 }
 
 function toRegister(event) {
