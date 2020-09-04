@@ -1,9 +1,9 @@
 let baseUrl = "http://localhost:3001"
 
 $(document).ready(function () {
-
     auth()
-    // fixtures()
+    $('#player-page').hide()
+    
 });
 
 function auth() {
@@ -22,11 +22,9 @@ function auth() {
         $('#navbar').hide()
         $('#player-page').hide()
         $('#register-page').hide()
-
     }
 
-  auth()
-})
+}
 
 function auth() {
   if (localStorage.access_token) {
@@ -36,12 +34,14 @@ function auth() {
     $("#schedule-page").hide()
     $("#register-page").hide()
     $("#navbar").show()
+    $('#player-page').hide()
   } else {
     $("#main-page").hide()
     $("#login-page").show()
     $("#schedule-page").hide()
     $("#navbar").hide()
     $("#register-page").hide()
+    $('#player-page').hide()
   }
 
 }
@@ -183,7 +183,7 @@ function fetchNews() {
                             width="200px"
                         />
                         <h5 class=""card-title"">${e.title}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        
             
                         <p class="card-text">
                             ${e.description}
@@ -211,7 +211,8 @@ function fetchNews() {
 //         })
 // }
 
-function toPlayer() {
+function toPlayer(event) {
+    event.preventDefault()
     $('#main-page').hide()
     $('#player-page').show()
     let name = $('#search-category').val()
@@ -280,9 +281,7 @@ function fixtures() {
                     <li class="card-text">
                       <i class="fa fa-calendar mr-2"></i>${e.event_date}
                     </li>
-                    <li class="card-text">
-                      <i class="fa fa-map-marker mr-2"></i>Gelora Bung Karno
-                    </li>
+                    
                   </ul>
                 </div>
                 <div class="col text-center">
