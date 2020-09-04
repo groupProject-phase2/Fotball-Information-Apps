@@ -17,8 +17,7 @@ class NewsController {
 
       res.status(200).json(response.data)
     } catch (ex) {
-      // TODO ERROR HANDLING
-      res.json(ex)
+      next(ex)
     }
   }
 }
