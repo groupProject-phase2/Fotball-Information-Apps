@@ -1,6 +1,7 @@
 const { User } = require("../models")
 const { comparePassword } = require("../helpers/bcrypt")
-const { generateToken } = require('../helpers/jwt')
+const { generateToken } = require("../helpers/jwt")
+const { InvalidEmailOrPassword } = require("../helpers/error")
 
 class UserController {
   static async register(req, res, next) {
@@ -14,7 +15,7 @@ class UserController {
         city: user.city,
       })
     } catch (err) {
-      console.log(err)
+      next(err)
     }
   }
 
@@ -22,28 +23,28 @@ class UserController {
     try {
       let { email, password } = req.body
       const user = await User.findOne({
-        where : {
-          email
-        }
+        where: {
+          email,
+        },
       })
-      if(!user) {
-        throw { msg: 'invalid user or password'}
+      if (!user) {
+        throw new InvalidEmailOrPassword()
       } else {
         let compare = comparePassword(password, user.password)
-        if(!compare) {
-          throw { msg: 'invalid user or password'}
+        if (!compare) {
+          throw new InvalidEmailOrPassword()
         } else {
           let payload = {
             id: user.id,
-            email: user.email
+            email: user.email,
           }
           let access_token = generateToken(payload)
           let city = user.city
-          res.status(200).json({access_token, city})
+          res.status(200).json({ access_token, city })
         }
       }
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      next(err)
     }
   }
 }
