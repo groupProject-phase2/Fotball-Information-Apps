@@ -120,11 +120,8 @@
 - **URL Params**
 
   ```ts
-  {
-    country?: string,
-    category?:string
-  }
-
+  country?: string,
+  category?:string
   ```
 
 - **Data Params**
@@ -187,19 +184,15 @@
 - **URL Params**
 
   ```ts
-  {
-    from?: string,
-    to?:string
-  }
 
+  from?: string,
+  to?:string
   ```
 
 - **Headers**
 
 ```ts
-{
-  access_token: string
-}
+access_token: string
 ```
 
 - **Data Params**
