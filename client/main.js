@@ -6,18 +6,20 @@ $(document).ready(function () {
 });
 
 function auth() {
-    if (localStorage.access_token ) {
+    if (localStorage.access_token) {
         $('#main-page').show()
         fetchNews()
         $('#login-page').hide()
         $('#schedule-page').hide()
         $('#register-page').hide()
+        $('#player-page').hide()
         $('#navbar').show()
     } else {
         $('#main-page').hide()
         $('#login-page').show()
         $('#schedule-page').hide()
         $('#navbar').hide()
+        $('#player-page').hide()
         $('#register-page').hide()
 
     }
@@ -84,6 +86,13 @@ function toSchedule(event) {
     fixtures()
 }
 
+function toHome(event) {
+    event.preventDefault()
+    auth()
+    $('#search-category').val('')
+    fetchNews()
+}
+
 function toRegister(event) {
     event.preventDefault()
     $('#login-page').hide()
@@ -104,7 +113,7 @@ function fetchNews() {
     $.ajax({
         url: `${baseUrl}/news`,
         method: 'get',
-        Headers: {
+        headers: {
             access_token: localStorage.access_token
         }
     })
@@ -134,22 +143,67 @@ function fetchNews() {
         })
 }
 
+// function player() {
+//     $.ajax({
+//         url: 'https://allsportsapi.com/api/football/?&met=Players&playerName=Ronaldo Cristiano&APIkey=a8d998e705f70e81aa5bec929e7e9248ad796c2cfb8783a254ac944e6995ac19',
+//         method: 'get',
+
+//     })
+//         .done(data => {
+//             console.log(data)
+//         })
+//         .fail(err => {
+
+//         })
+// }
+
+function toPlayer() {
+    $('#main-page').hide()
+    $('#player-page').show()
+    let name = $('#search-category').val()
+    $.ajax({
+        url: `https://allsportsapi.com/api/football/?&met=Players&playerName=${name}&APIkey=a8d998e705f70e81aa5bec929e7e9248ad796c2cfb8783a254ac944e6995ac19`,
+        method: 'get',
+
+    })
+        .done(data => {
+            console.log(data)
+            $('#player-container').empty()
+            data.result.forEach(element => {
+                console.log(element.player_age)
+                $('#player-container').append(`<div class="card" style="width: 35rem;">
+                <div class="card-body">
+                  <h5 class="card-title">${element.player_name}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">TEAM NAME :${element.team_name}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">POSITION :${element.player_type}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">GOAL : ${element.player_goals}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">MATCH : ${element.player_match_played}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">NUMBER : ${element.player_number}</h6>
+                </div>
+              </div><br>`)
+            });
+        })
+        .fail(err => {
+
+        })
+        always(_ => {
+            $('#search-category').val('')
+        })
+}
+
 
 function fixtures() {
-    console.log("masukfixture")
     $.ajax({
         url: `http://localhost:3001/football/fixtures`,
         method: 'get',
-        Headers: {
+        headers: {
             access_token: localStorage.access_token
         }
     })
-    .done(data => {
-        console.log(data)
-        data.data.forEach(e => {
-            console.log(e.away_team_logo)
-            
-            $('#schedule-container').append(`
+        .done(data => {
+            console.log(data)
+            data.data.forEach(e => {
+                $('#schedule-container').append(`
             <div class="card border-0 shadow mb-3">
             <div class="card-body">
               <h6 class="card-title text-center">${e.league_name}</h6>
@@ -187,10 +241,10 @@ function fixtures() {
               </div>
             </div>
           </div>`)
-        });
-    })
-    .fail(err => {
+            });
+        })
+        .fail(err => {
 
-    })
+        })
 }
 
