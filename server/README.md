@@ -194,6 +194,14 @@
 
   ```
 
+- **Headers**
+
+```ts
+{
+  access_token: string
+}
+```
+
 - **Data Params**
 
   `none`
