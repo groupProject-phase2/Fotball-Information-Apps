@@ -1,6 +1,7 @@
-let baseUrl = 'http://localhost:3001'
+let baseUrl = "http://localhost:3001"
 
 $(document).ready(function () {
+
     auth()
     // fixtures()
 });
@@ -23,21 +24,57 @@ function auth() {
         $('#register-page').hide()
 
     }
+
+  auth()
+})
+
+function auth() {
+  if (localStorage.access_token) {
+    $("#main-page").show()
+    fetchNews()
+    $("#login-page").hide()
+    $("#schedule-page").hide()
+    $("#register-page").hide()
+    $("#navbar").show()
+  } else {
+    $("#main-page").hide()
+    $("#login-page").show()
+    $("#schedule-page").hide()
+    $("#navbar").hide()
+    $("#register-page").hide()
+  }
+
 }
 
 function login(event) {
-    event.preventDefault()
-    let email = $('#login-email').val()
-    let password = $('#login-password').val()
-    console.log(email, password)
-    $.ajax({
-        url: 'http://localhost:3001/login',
-        method: 'post',
-        data: {
-            email,
-            password
-        }
+  event.preventDefault()
+  let email = $("#login-email").val()
+  let password = $("#login-password").val()
+  console.log(email, password)
+  $.ajax({
+    url: "http://localhost:3001/login",
+    method: "post",
+    data: {
+      email,
+      password,
+    },
+  })
+    .done((data) => {
+      localStorage.setItem("access_token", data.token)
+      localStorage.setItem("city", data.city)
+      auth()
     })
+    .fail((err) => {
+      alertify.set("notifier", "position", "bottom-center")
+      alertify.notify(err.responseJSON.error, "error", 5, function () {
+        console.log("dismissed")
+      })
+    })
+    .always((_) => {
+      $("#login-email").val("")
+      $("#login-password").val("")
+    })
+
         .done(data => {
             localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('city', data.city)
@@ -50,40 +87,51 @@ function login(event) {
             $('#login-email').val('')
             $('#login-password').val('')
         })
+
 }
 
 function register(event) {
-    event.preventDefault()
-    let email = $('#register-email').val()
-    let password = $('#register-password').val()
-    let city = $('#register-city').val()
-    $.ajax({
-        url: `${baseUrl}/register`,
-        method: 'post',
-        data: {
-            email,
-            password,
-            city
-        }
+  event.preventDefault()
+  let email = $("#register-email").val()
+  let password = $("#register-password").val()
+  let city = $("#register-city").val()
+  $.ajax({
+    url: `${baseUrl}/register`,
+    method: "post",
+    data: {
+      email,
+      password,
+      city,
+    },
+  })
+    .done((data) => {
+      auth()
     })
-        .done(data => {
-            auth()
-        })
-        .fail(err => {
-            console.log(err.responeJSON, 'err')
-        })
-        .always(_ => {
-            $('#register-email').val('')
-            $('#register-password').val('')
-            $('#register-city').val('')
-        })
+    .fail((err) => {
+      alertify.set("notifier", "position", "bottom-center")
+      alertify.notify(
+        err.responseJSON.error.join("\n"),
+        "error",
+        10,
+        function () {
+          console.log("dismissed")
+        }
+      )
+    })
+    .always((_) => {
+      $("#register-email").val("")
+      $("#register-password").val("")
+      $("#register-city").val("")
+    })
 }
 
 function toSchedule(event) {
+
     event.preventDefault()
     $('#main-page').hide()
     $('#schedule-page').show()
     fixtures()
+
 }
 
 function toHome(event) {
@@ -94,34 +142,40 @@ function toHome(event) {
 }
 
 function toRegister(event) {
-    event.preventDefault()
-    $('#login-page').hide()
-    $('#register-page').show()
+  event.preventDefault()
+  $("#login-page").hide()
+  $("#register-page").show()
 }
 
 function toLogin(event) {
-    event.preventDefault()
-    $('#login-page').show()
-    $('#register-page').hide()
+  event.preventDefault()
+  $("#login-page").show()
+  $("#register-page").hide()
 }
 
 function logout() {
-    localStorage.clear()
+  localStorage.clear()
+  var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+  });
+  auth()
 }
 
 function fetchNews() {
-    $.ajax({
-        url: `${baseUrl}/news`,
-        method: 'get',
-        headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(data => {
-            $('#news-container').empty()
-            data.articles.forEach(e => {
-                $('#news-container').append(
-                    `<ul><div class="card shadow border-0 mb-3">
+  $.ajax({
+    url: `${baseUrl}/news`,
+    method: "get",
+    Headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((data) => {
+      $("#news-container").empty()
+      data.articles.forEach((e) => {
+        $("#news-container").append(
+          `<ul><div class="card shadow border-0 mb-3">
+
                     <div class="card-body">
                         <img
                         src="${e.urlToImage}"
@@ -135,13 +189,13 @@ function fetchNews() {
                             ${e.description}
                         </p>
                     </div>
-              </div></ul>`)
-            });
-        })
-        .fail(err => {
-
-        })
+              </div></ul>`
+        )
+      })
+    })
+    .fail((err) => {})
 }
+
 
 // function player() {
 //     $.ajax({
@@ -191,19 +245,20 @@ function toPlayer() {
         })
 }
 
-
 function fixtures() {
-    $.ajax({
-        url: `http://localhost:3001/football/fixtures`,
-        method: 'get',
-        headers: {
-            access_token: localStorage.access_token
-        }
-    })
-        .done(data => {
-            console.log(data)
-            data.data.forEach(e => {
-                $('#schedule-container').append(`
+  $.ajax({
+    url: `${baseUrl}/football/fixtures`,
+    method: "get",
+    Headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((data) => {
+      console.log(data)
+      data.data.forEach((e) => {
+        console.log(e.away_team_logo)
+
+        $("#schedule-container").append(`
             <div class="card border-0 shadow mb-3">
             <div class="card-body">
               <h6 class="card-title text-center">${e.league_name}</h6>
@@ -241,10 +296,30 @@ function fixtures() {
               </div>
             </div>
           </div>`)
-            });
-        })
-        .fail(err => {
-
-        })
+      })
+    })
+    .fail((err) => {})
 }
 
+function onSignIn(googleUser) {
+  let id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token)
+  $.ajax({
+      url: `${baseUrl}/login/googlesign`,
+      method: 'post',
+      data : {
+          id_token 
+      }
+  })
+  .done(data => {
+      console.log(data.access_token, data.city ,'ini hasil console log')
+      localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('city', data.city)
+      console.log(data, 'ini data dari google')
+      auth()
+  })  
+  .fail(err => {
+      console.log(err.responeJSON, 'err')
+  })
+
+}
