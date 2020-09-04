@@ -108,6 +108,7 @@ function toLogin(event) {
 
 function logout() {
   localStorage.clear()
+  auth()
 }
 
 function fetchNews() {
