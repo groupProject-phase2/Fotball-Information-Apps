@@ -45,6 +45,7 @@ function login(event) {
         })
 }
 
+
 function register(event) {
     event.preventDefault()
     let email = $('#register-email').val()
