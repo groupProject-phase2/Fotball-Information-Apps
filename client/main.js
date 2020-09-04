@@ -1,4 +1,4 @@
-let baseUrl = "http://localhost:3001"
+let baseUrl = "http://localhost:3000"
 
 $(document).ready(function () {
   auth()
@@ -113,6 +113,24 @@ function logout() {
       console.log('User signed out.');
   });
   auth()
+}
+
+function getWeather(){
+  $.ajax({
+    url: `${baseUrl}/weather`,
+    method: 'get',
+    Headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+  .done((data) => {
+    $('#weather-container').append(`
+    <ul>
+    <img src="${data.image}">
+    </ul>
+    `)
+  })
+  .fail((err) => {})
 }
 
 function fetchNews() {
