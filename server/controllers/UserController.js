@@ -79,7 +79,6 @@ class UserController {
           id: newUser.id,
           email: newUser.email
         })
-        console.log(access_token, city)
         res.status(200).json({access_token, city:newUser.city})
       }
     } catch(err) {
